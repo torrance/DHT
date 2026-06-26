@@ -349,7 +349,8 @@ class Server:
 
     def ping_node(self, node: Node):
         if id := self.ping_address(node.address, node.port):
-            node.seen()
+            if node.id == id:
+                node.seen()
 
         return id
 
