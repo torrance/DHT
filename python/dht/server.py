@@ -156,7 +156,9 @@ class Server:
                             )
                     elif q == b"get_peers":
                         try:
-                            info_hash: int = int.from_bytes(data[b"a"][b"info_hash"], "big")
+                            info_hash: int = int.from_bytes(
+                                data[b"a"][b"info_hash"], "big"
+                            )
                         except Exception:
                             logger.info(
                                 "Unable to extract a.info_hash key from get_peers query"
@@ -202,7 +204,9 @@ class Server:
                             if data[b"a"].get(b"implied_port", 0):
                                 peer_port: int = port
                             else:
-                                peer_port: int = int.from_bytes(data[b"a"][b"port"], "big")
+                                peer_port: int = int.from_bytes(
+                                    data[b"a"][b"port"], "big"
+                                )
                         except Exception:
                             logger.info(
                                 "Unable to extract expected keys from announce query"
