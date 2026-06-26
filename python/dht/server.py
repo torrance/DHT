@@ -119,7 +119,7 @@ class Server:
                     payload = {
                         "t": tid,
                         "y": "r",
-                        "ip": address.packed + port.to_bytes(2, "big"),
+                        "ip": address.packed,
                         "r": {"id": self.root.id.to_bytes(20, "big")},
                     }
 
