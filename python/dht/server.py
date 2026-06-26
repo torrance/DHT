@@ -139,7 +139,9 @@ class Server:
 
                         try:
                             nearest: list[Node] = self.routingtable.get_closest(target)
-                            payload["r"]["nodes"] = flatten([bytes(n) for n in nearest])
+                            payload["r"]["nodes"] = b"".join(
+                                [bytes(n) for n in nearest]
+                            )
 
                             self.socket.sendto(
                                 bencode.encode(payload), (str(address), port)
@@ -166,7 +168,7 @@ class Server:
 
                             if peers := self.peertable.get(info_hash):
                                 # Return the peers as a list of compact peer formats (6 bytes)
-                                payload["r"]["values"] = flatten(
+                                payload["r"]["values"] = b"".join(
                                     [bytes(peer) for peer in peers]
                                 )
                                 logger.info(
@@ -178,7 +180,7 @@ class Server:
                                 nearest = self.routingtable.get_closest(info_hash)
 
                                 # Concatenate 26 byte node formats together
-                                payload["r"]["nodes"] = flatten(
+                                payload["r"]["nodes"] = b"".join(
                                     [bytes(n) for n in nearest]
                                 )
 
