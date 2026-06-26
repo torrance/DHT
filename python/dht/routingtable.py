@@ -28,7 +28,7 @@ class RoutingTable:
             return dist.bit_length() - 1
 
     def add(self, node: Node):
-        if not (node.is_good or node.validate_id()):
+        if not (node.is_good and node.validate_id()):
             return
 
         with self.lock:
