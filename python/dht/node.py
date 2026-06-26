@@ -1,6 +1,5 @@
-from enum import Enum
 import datetime
-from ipaddress import IPv4Address, IPv6Address
+from ipaddress import IPv4Address
 from os import urandom
 import threading
 

@@ -1,4 +1,3 @@
-import itertools
 import threading
 from typing import Iterator
 

@@ -6,7 +6,6 @@ import random
 import socket
 from threading import Thread
 import time
-from typing import Optional
 
 from dht.announcetoken import AnnounceToken
 import dht.bencode as bencode
