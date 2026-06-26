@@ -256,7 +256,7 @@ class Server:
                     )
         except Exception as e:
             logger.exception("Unchaught exception in listener", exc_info=e)
-            self.keepalive = False
+            self.keepalive.set(False)
 
         logger.info("Listener shutting down")
 
@@ -344,7 +344,7 @@ class Server:
                 time.sleep(30)
         except Exception as e:
             logger.exception("Uncaught exception in router", exc_info=e)
-            self.keepalive = False
+            self.keepalive.set(False)
 
         logger.info("Router is shutting down")
 
