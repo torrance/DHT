@@ -397,6 +397,9 @@ class Server:
             return []
 
         try:
+            if int.from_bytes(response[b"id"], byteorder="big") == node.id:
+                node.seen()
+
             assert isinstance(response[b"nodes"], bytes)
 
             nodes = []
