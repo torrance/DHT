@@ -204,9 +204,7 @@ class Server:
                             if data[b"a"].get(b"implied_port", 0):
                                 peer_port: int = port
                             else:
-                                peer_port: int = int.from_bytes(
-                                    data[b"a"][b"port"], "big"
-                                )
+                                peer_port: int = data[b"a"][b"port"]
                         except Exception:
                             logger.info(
                                 "Unable to extract expected keys from announce query"
