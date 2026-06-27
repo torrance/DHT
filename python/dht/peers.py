@@ -3,19 +3,26 @@ from ipaddress import IPv4Address
 
 
 class Peer:
-    def __init__(self, ipaddress: IPv4Address, port: int):
-        self.ipaddress = ipaddress
+    def __init__(self, address: IPv4Address, port: int):
+        self.address = address
         self.port = port
         self.last_seen = datetime.datetime.now(datetime.UTC)
 
     def __eq__(self, other) -> bool:
-        return self.ipaddress == other.ipaddress and self.port == other.port
+        return self.address == other.address and self.port == other.port
 
     def seen(self) -> None:
         self.last_seen = datetime.datetime.now(datetime.UTC)
 
     def __bytes__(self) -> bytes:
-        return self.ipaddress.packed + self.port.to_bytes(2, "big")
+        return self.address.packed + self.port.to_bytes(2, "big")
+
+    @classmethod
+    def from_bytes(cls, bs: bytes) -> "Peer":
+        assert len(bs) == 6
+        address = IPv4Address(bs[:4])
+        port = int.from_bytes(bs[4:], "big")
+        return cls(address, port)
 
 
 class PeerTable:
