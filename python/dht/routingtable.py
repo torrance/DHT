@@ -51,7 +51,10 @@ class RoutingTable:
     def remove(self, node: Node):
         with self.lock:
             bucket = self.buckets[self.get_id(node)]
-            bucket.remove(node)
+            try:
+                bucket.remove(node)
+            except ValueError:
+                pass
 
     def get_closest(self, id) -> list[Node]:
         with self.lock:
