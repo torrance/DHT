@@ -39,23 +39,18 @@ def encode_bytes(b: bytes | str) -> bytes:
 def encode_list(ls: list) -> bytes:
     """Lists are encoded as l<elements>e"""
 
-    bs = b"l"
-    for l in ls:
-        bs += encode(l)
-
-    return bs + b"e"
+    return b"l" + b"".join([encode(l) for l in ls]) + b"e"
 
 
 def encode_dict(d: dict) -> bytes:
     """Dictionaries are encoded as d<pairs>e"""
 
-    bs = b"d"
-
     # Keys must be in lexigraphical order
-    for key in sorted(d.keys()):
-        bs += encode_bytes(key) + encode(d[key])
+    # Since we allow keys to be both string and bytes we need to convert to
+    # bytes to perform this sort.
+    keys = sorted(d.keys(), key=lambda k: k.encode("ascii") if isinstance(k, str) else k)
 
-    return bs + b"e"
+    return b"d" + b"".join([encode_bytes(key) + encode(d[key]) for key in keys]) + b"e"
 
 
 def decode(b: bytes | BufferedReader):  # -> int | Any | None:
