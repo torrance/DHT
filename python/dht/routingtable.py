@@ -26,9 +26,9 @@ class RoutingTable:
         else:
             return dist.bit_length() - 1
 
-    def add(self, node: Node):
+    def add(self, node: Node) -> bool:
         if not (node.is_good and node.validate_id()):
-            return
+            return False
 
         with self.lock:
             bucket = self.buckets[self.get_id(node)]
@@ -36,12 +36,16 @@ class RoutingTable:
                 if len(bucket) < self.K:
                     # Always add a new node if there's capacity
                     bucket.append(node)
+                    return True
                 else:
                     # Replace dead nodes
                     oldest = sorted(bucket, key=lambda n: n.last_seen)[0]
                     if oldest.is_dead:
                         bucket.remove(oldest)
                         bucket.append(node)
+                        return True
+
+            return False
 
 
     def remove(self, node: Node):
