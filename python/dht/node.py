@@ -34,10 +34,14 @@ class Node:
         return f"Node(id={self.id:049d} @ {self.address}:{self.port})"
 
     def __hash__(self):
-        return hash(self.id)
+        return hash((self.id, self.address, self.port))
 
     def __eq__(self, other):
-        return self.id == other.id
+        return (
+            self.id == other.id
+            and self.address == other.address
+            and self.port == other.port
+        )
 
     def __bytes__(self):
         return (
