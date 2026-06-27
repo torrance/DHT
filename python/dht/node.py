@@ -50,6 +50,14 @@ class Node:
             + self.port.to_bytes(2, "big")
         )
 
+    @classmethod
+    def from_bytes(cls, bs: bytes) -> "Node":
+        assert len(bs) == 26
+        id = int.from_bytes(bs[0:20], byteorder="big")
+        address = IPv4Address(bs[20:24])
+        port = int.from_bytes(bs[24:26], byteorder="big")
+        return cls(id, address, port)
+
     def validate_id(self) -> bool:
         """Check whether the nodeid and ipaddress are compliant with BEP 42"""
 

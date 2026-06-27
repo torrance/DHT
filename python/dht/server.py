@@ -406,13 +406,7 @@ class Server:
 
             nodes = []
             for i in range(0, len(response[b"nodes"]), 26):
-                compact: bytes = response[b"nodes"][i : i + 26]
-                assert len(compact) == 26
-
-                nodeid = int.from_bytes(compact[0:20], byteorder="big")
-                address = IPv4Address(compact[20:24])
-                port = int.from_bytes(compact[24:26], byteorder="big")
-                nodes.append(Node(nodeid, address, port))
+                nodes.append(Node.from_bytes(response[b"nodes"][i : i + 26]))
 
             return nodes
         except Exception:
