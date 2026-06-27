@@ -18,7 +18,6 @@ class TestBencode(unittest.TestCase):
     def test_list(self):
         data = [12389, b"hi there", [54321, b"bye now"]]
         bs = bencode.encode(data)
-        print(bs)
 
         self.assertEqual(b"li12389e8:hi thereli54321e7:bye nowee", bs)
         self.assertEqual(data, bencode.decode(bs))
@@ -30,7 +29,6 @@ class TestBencode(unittest.TestCase):
         }
 
         bs = bencode.encode(data)
-        print(bs)
         self.assertEqual(data, bencode.decode(bs))
 
 
